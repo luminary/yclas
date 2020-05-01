@@ -1,0 +1,7 @@
+{
+    "require": {
+        "ext-mstring" : "*",
+        "ext-soap" : "*",
+        "ext-imagick" : "*"
+    }
+}
