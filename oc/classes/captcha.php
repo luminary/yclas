@@ -32,6 +32,45 @@ class Captcha{
 
         $length = mt_rand(3,5);//code length
         $lines  = mt_rand(1,5);//to make the image dirty
+        $code   = ''; //code generated saved at session
+
+        //writting the chars
+        for( $i=0, $x=0; $i<$length; $i++ ) 
+        {
+           $actChar = substr($baseList, rand(0, strlen($baseList)-1), 1);
+           $x += 10 + mt_rand(0,10);
+           $code .= strtolower($actChar);
+        }
+
+        print_r("captcha code is:");
+        print_r($code);
+        
+        Session::instance()->set('captcha_'.$name, $code);   
+
+        //die( 'changed= '.Session::instance()->get('captcha_'.$name));
+        
+        // prevent client side caching
+        header("Expires: Wed, 1 Jan 1997 00:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", FALSE);
+        header("Pragma: no-cache");
+        header("Set-Cookie: TEST_CODE=$code");
+    }
+
+    /**
+     * generates the image for the captcha
+     * @param string $name, used in the session
+     * @param int $width
+     * @param int $height
+     * @param string $baseList
+     */
+    public static function image_old($name='',$width=120,$height=40,$baseList = '123456789abcdfghjkmnpqrstvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ')
+    {
+        //echo $name.' orig= '.Session::instance()->get('captcha_'.$name).'<br>';
+
+        $length = mt_rand(3,5);//code length
+        $lines  = mt_rand(1,5);//to make the image dirty
         $image  = @imagecreate($width, $height) or die('Cannot initialize GD!');
         $code   = ''; //code generated saved at session
 
