@@ -154,6 +154,8 @@ abstract class Kohana_Auth {
 		if ( ! $this->_config['hash_key'])
 			throw new Kohana_Exception('A valid hash key must be set in your auth config.');
 
+		print_r("hash_key is", $this->config['hash_key']);
+
 		return hash_hmac($this->_config['hash_method'], $str, $this->_config['hash_key']);
 	}
 
