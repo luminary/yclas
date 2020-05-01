@@ -53,6 +53,9 @@ class Captcha{
               imagecolorallocate($image, mt_rand(0,155), mt_rand(0,155), mt_rand(0,155)));
            $code .= strtolower($actChar);
         }
+
+        print_r("captcha code is:");
+        print_r($code);
         
         Session::instance()->set('captcha_'.$name, $code);   
 
